@@ -1,0 +1,103 @@
+{
+  "rabbit_version": "3.6.5",
+  "users": [
+    {
+      "name": "guest",
+      "password_hash": "o2MJjT8UKSRM7eoLDMWvm4LxqaFvDxd2wLg1KQQQ2jXfG5UE",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "administrator"
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "rabbitmq-test"
+    }
+  ],
+  "permissions": [
+    {
+      "user": "guest",
+      "vhost": "rabbitmq-test",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "parameters": [],
+  "policies": [],
+  "queues": [
+    {
+      "name": "test.queue",
+      "vhost": "rabbitmq-test",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-ha-policy": "all"
+      }
+    } , 
+    {
+      "name": "test.queue.ci",
+      "vhost": "rabbitmq-test",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-ha-policy": "all"
+      }
+    } , 
+    {
+      "name": "test.queue.pp",
+      "vhost": "rabbitmq-test",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-ha-policy": "all"
+      }
+    } ,
+    {
+      "name": "test.queue.retry_queue",
+      "vhost": "rabbitmq-test",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-ha-policy": "all"
+      } 
+      }, 
+      {
+      "name": "test.queue.retry_queue.ci",
+      "vhost": "rabbitmq-test",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-ha-policy": "all"
+      }
+      },
+      {
+      "name": "test.queue.retry_queue.pp",
+      "vhost": "rabbitmq-test",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-ha-policy": "all"
+      }
+      }
+    
+  ],
+  "exchanges": [],
+  "bindings": [
+    {
+      "source": "amq.direct",
+      "vhost": "rabbitmq-test",
+      "destination": "test.queue.retry_queue.pp",
+      "destination_type": "queue",
+      "routing_key": "logstash",
+      "arguments": {}
+    },
+    {
+      "source": "amq.direct",
+      "vhost": "rabbitmq-test",
+      "destination": "test.queue.retry_queue.pp",
+      "destination_type": "queue",
+      "routing_key": "v1",
+      "arguments": {}
+    }
+  ]
+}
